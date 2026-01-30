@@ -258,3 +258,114 @@
   0% { opacity: 0; transform: translateY(10px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+
+/* ============ BOLLYWOOD EASTER EGG ============ */
+.bollywood-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  cursor: pointer;
+}
+.bollywood-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+  background: radial-gradient(ellipse at center,
+    rgba(255, 100, 0, 0.85) 0%,
+    rgba(200, 0, 80, 0.9) 50%,
+    rgba(100, 0, 150, 0.95) 100%);
+  animation: bollywood-bg 1s ease-in-out infinite alternate;
+}
+
+@keyframes bollywood-bg {
+  0% { background: radial-gradient(ellipse at center, rgba(255,100,0,0.85), rgba(200,0,80,0.9), rgba(100,0,150,0.95)); }
+  100% { background: radial-gradient(ellipse at center, rgba(255,200,0,0.85), rgba(255,50,100,0.9), rgba(150,0,200,0.95)); }
+}
+
+.bollywood-content {
+  text-align: center;
+  z-index: 2;
+  animation: bollywood-zoom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes bollywood-zoom {
+  0% { transform: scale(0) rotate(-10deg); }
+  60% { transform: scale(1.15) rotate(3deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.bollywood-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #FFD700;
+  text-shadow: 3px 3px 0 #FF4500, -1px -1px 0 #FF4500;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+  animation: bollywood-pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes bollywood-pulse {
+  0% { transform: scale(1); text-shadow: 3px 3px 0 #FF4500; }
+  100% { transform: scale(1.05); text-shadow: 3px 3px 10px #FF4500, 0 0 30px #FFD700; }
+}
+
+.bollywood-avatar {
+  font-size: 5rem;
+  animation: bollywood-dance 0.6s ease-in-out infinite alternate;
+  display: inline-block;
+}
+
+@keyframes bollywood-dance {
+  0% { transform: rotate(-15deg) scale(1); }
+  50% { transform: rotate(0deg) scale(1.1); }
+  100% { transform: rotate(15deg) scale(1); }
+}
+
+.bollywood-quote {
+  font-size: 1.4rem;
+  color: white;
+  font-style: italic;
+  font-weight: 700;
+  max-width: 500px;
+  margin: 20px auto;
+  line-height: 1.6;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  animation: bollywood-text 0.8s ease-out 0.3s both;
+}
+
+@keyframes bollywood-text {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.bollywood-subtitle {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.8rem;
+  margin-top: 20px;
+}
+
+/* Falling emojis */
+.bollywood-emojis {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bollywood-emoji {
+  position: absolute;
+  top: -50px;
+  font-size: 2rem;
+  animation: bollywood-fall linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes bollywood-fall {
+  0% { transform: translateY(-50px) rotate(0deg); opacity: 0.8; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}

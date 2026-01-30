@@ -164,6 +164,71 @@ const Game = {
         this.saveState();
       });
     }
+
+    // Bollywood easter egg - click pot 10 times
+    this.potClickCount = 0;
+    const pot = document.querySelector('.pot');
+    if (pot) {
+      pot.addEventListener('click', () => {
+        this.potClickCount++;
+        if (this.potClickCount === 10) {
+          this.triggerBollywood();
+          this.potClickCount = 0;
+        } else if (this.potClickCount >= 7) {
+          // Pot starts shaking as a hint
+          pot.classList.add('shake');
+          setTimeout(() => pot.classList.remove('shake'), 400);
+        }
+      });
+    }
+  },
+
+  // ===== BOLLYWOOD EASTER EGG =====
+  triggerBollywood() {
+    const overlay = document.getElementById('bollywood-overlay');
+    if (!overlay) return;
+
+    // Pick a random Bollywood quote
+    const quotes = [
+      "Kuch kuch hota hai, Sean... tum nahi samjhoge!",
+      "Ek chai ki keemat tum kya jaano, Ramesh Babu!",
+      "Mere paas chai hai... mere paas Pooja ka secret recipe hai... tumhare paas kya hai?!",
+      "Mogambo khush hua! ...because this chai is PERFECT!",
+      "Don ko pakadna mushkil hi nahi, namumkin hai... but making good chai? Also namumkin for you!",
+      "Kitne cups the? ...SARDAR, TEEN!",
+      "Rahul, naam toh suna hoga... but have you tasted my chai?",
+      "Bade bade deshon mein aisi chhoti chhoti chai banti rehti hai"
+    ];
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+    overlay.querySelector('.bollywood-quote').textContent = quote;
+    overlay.classList.add('active');
+
+    // Spawn emojis
+    const emojis = ['\u{1F483}', '\u{1F57A}', '\u2615', '\u{1F31F}', '\u{1F525}', '\u{1F3B5}', '\u{1F3B6}', '\u{1F389}', '\u{1F38A}', '\u{1F4AB}'];
+    const container = overlay.querySelector('.bollywood-emojis');
+    container.innerHTML = '';
+    for (let i = 0; i < 30; i++) {
+      const span = document.createElement('span');
+      span.className = 'bollywood-emoji';
+      span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      span.style.left = Math.random() * 100 + '%';
+      span.style.animationDelay = Math.random() * 2 + 's';
+      span.style.animationDuration = (2 + Math.random() * 3) + 's';
+      container.appendChild(span);
+    }
+
+    // Auto-dismiss after 6 seconds
+    setTimeout(() => {
+      overlay.classList.remove('active');
+      UI.showDialogue('pooja', "What just happened?! ...We don't speak of this. Back to chai!");
+    }, 6000);
+
+    // Click to dismiss early
+    overlay.onclick = () => {
+      overlay.classList.remove('active');
+      UI.showDialogue('pooja', "Okay okay, enough drama! Focus on the chai!");
+    };
   },
 
   // ===== LEVEL SELECT =====
