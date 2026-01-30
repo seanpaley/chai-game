@@ -59,6 +59,11 @@ const Daily = {
     localStorage.setItem('chaidleGameState', JSON.stringify(state));
   },
 
+  clearTodayState() {
+    localStorage.removeItem('chaidleGameState');
+    localStorage.removeItem('chaidleLastPlayed');
+  },
+
   // Countdown to next puzzle
   getTimeToNextPuzzle() {
     const now = new Date();

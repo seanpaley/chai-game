@@ -117,6 +117,17 @@ const Chaidle = {
     }
   },
 
+  feedbackLabel(state) {
+    if (state === 'correct') return 'Yes';
+    if (state === 'present') return 'Move';
+    return 'No';
+  },
+
+  setCellRevealed(cell, emoji, feedbackState) {
+    cell.innerHTML = `<span class="cell-emoji">${emoji}</span><span class="cell-label">${this.feedbackLabel(feedbackState)}</span>`;
+    cell.classList.add('filled', 'revealed', feedbackState);
+  },
+
   renderAttemptRow(rowIdx, attempt, feedback) {
     for (let col = 0; col < this.SLOTS; col++) {
       const cell = document.querySelector(`.grid-cell[data-row="${rowIdx}"][data-col="${col}"]`);
@@ -124,16 +135,8 @@ const Chaidle = {
 
       const ingId = attempt[col];
       const ing = CHAIDLE_INGREDIENTS.find(i => i.id === ingId);
-      cell.textContent = ing ? ing.emoji : '?';
-      cell.classList.add('filled', 'revealed');
-
-      if (feedback[col] === 'correct') {
-        cell.classList.add('correct');
-      } else if (feedback[col] === 'present') {
-        cell.classList.add('present');
-      } else {
-        cell.classList.add('absent');
-      }
+      const emoji = ing ? ing.emoji : '?';
+      this.setCellRevealed(cell, emoji, feedback[col]);
     }
   },
 
@@ -242,8 +245,28 @@ const Chaidle = {
     // Help button
     document.getElementById('btn-help').addEventListener('click', () => this.showHelp());
 
+    // Hidden reset: double-click puzzle number
+    document.getElementById('puzzle-number').addEventListener('dblclick', () => this.resetGame());
+
     // Track current row
     this.highlightCurrentRow();
+  },
+
+  resetGame() {
+    if (!confirm('Reset today\'s puzzle? Your progress will be lost.')) return;
+    Daily.clearTodayState();
+    this.attempts = [];
+    this.currentRow = [];
+    this.gameOver = false;
+    this.won = false;
+    this.keyboardState = {};
+    this.potClickCount = 0;
+    document.getElementById('end-state').classList.remove('visible');
+    document.getElementById('end-state').innerHTML = '';
+    this.renderGrid();
+    this.renderKeyboard();
+    this.highlightCurrentRow();
+    this.showPooja('Guess my recipe, beta!');
   },
 
   // ===== INPUT =====
@@ -375,7 +398,8 @@ const Chaidle = {
       if (!cell) continue;
 
       const ing = CHAIDLE_INGREDIENTS.find(i => i.id === attempt[col]);
-      cell.textContent = ing ? ing.emoji : '?';
+      const emoji = ing ? ing.emoji : '?';
+      cell.textContent = emoji;
       cell.classList.add('filled');
 
       // Stagger the flip animation
@@ -383,14 +407,7 @@ const Chaidle = {
         cell.classList.add('revealing');
         setTimeout(() => {
           cell.classList.remove('revealing');
-          cell.classList.add('revealed');
-          if (feedback[col] === 'correct') {
-            cell.classList.add('correct');
-          } else if (feedback[col] === 'present') {
-            cell.classList.add('present');
-          } else {
-            cell.classList.add('absent');
-          }
+          this.setCellRevealed(cell, emoji, feedback[col]);
         }, 250);
       }, col * 250);
     }
@@ -414,12 +431,24 @@ const Chaidle = {
       return ing ? ing.emoji : '?';
     }).join(' ');
 
+    // Determine GIF tag key
+    let gifTagKey;
+    if (this.won) {
+      const n = this.attempts.length;
+      if (n <= 2) gifTagKey = 'winEarly';
+      else if (n <= 4) gifTagKey = 'winMid';
+      else gifTagKey = 'winClutch';
+    } else {
+      gifTagKey = 'lose';
+    }
+
     let html = `
       <div class="end-card">
         <div class="end-pooja">
           <div class="avatar avatar-large avatar-pooja">\u{1F469}\u200D\u{1F373}</div>
           <div class="end-quote">"${poojaLine}"</div>
         </div>
+        <div class="gif-container" id="end-gif"></div>
         <div class="end-result">
           ${this.won ? `<div class="end-win">You got it in ${this.attempts.length}/5!</div>` : '<div class="end-lose">Better luck tomorrow!</div>'}
         </div>
@@ -456,6 +485,14 @@ const Chaidle = {
 
     // Start countdown
     this.startCountdown();
+
+    // Hidden reset: double-click the countdown time
+    document.getElementById('countdown-time').addEventListener('dblclick', () => this.resetGame());
+
+    // Load GIF
+    if (typeof Giphy !== 'undefined') {
+      Giphy.show('end-gif', gifTagKey);
+    }
   },
 
   startCountdown() {
@@ -578,6 +615,20 @@ const Chaidle = {
       span.style.animationDelay = Math.random() * 2 + 's';
       span.style.animationDuration = (2 + Math.random() * 3) + 's';
       container.appendChild(span);
+    }
+
+    // Add Bollywood GIF
+    if (typeof Giphy !== 'undefined') {
+      let gifContainer = overlay.querySelector('.bollywood-gif');
+      if (!gifContainer) {
+        gifContainer = document.createElement('div');
+        gifContainer.className = 'gif-container bollywood-gif';
+        gifContainer.id = 'bollywood-gif';
+        overlay.querySelector('.bollywood-content').appendChild(gifContainer);
+      } else {
+        gifContainer.innerHTML = '';
+      }
+      Giphy.show('bollywood-gif', 'bollywood');
     }
 
     setTimeout(() => overlay.classList.remove('active'), 6000);

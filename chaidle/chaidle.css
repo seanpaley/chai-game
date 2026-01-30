@@ -9,9 +9,9 @@
   --gold: #DAA520;
   --green: #4CAF50;
   --light-brown: #F5DEB3;
-  --correct: #8B5E3C;
-  --present: #C9A84C;
-  --absent: #CCC;
+  --correct: #5A3E28;
+  --present: #E6A817;
+  --absent: #787C7E;
 }
 
 * {
@@ -685,6 +685,54 @@ body {
 .help-row span:last-child {
   font-size: 0.85rem;
   color: var(--dark-brown);
+}
+
+/* ============ CELL LABELS ============ */
+.grid-cell.revealed {
+  flex-direction: column;
+  gap: 0;
+  line-height: 1;
+  padding: 2px 0;
+}
+
+.grid-cell.revealed .cell-emoji {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.cell-label {
+  font-size: 0.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 1px;
+  line-height: 1;
+}
+
+/* ============ GIF CONTAINER ============ */
+.gif-container {
+  margin: 12px auto;
+  text-align: center;
+  min-height: 0;
+}
+
+.gif-container img {
+  max-width: 240px;
+  width: 100%;
+  border-radius: 12px;
+  animation: gif-fade-in 0.6s ease-out;
+}
+
+@keyframes gif-fade-in {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.gif-credit {
+  font-size: 0.6rem;
+  color: #aaa;
+  margin-top: 4px;
 }
 
 /* ============ RESPONSIVE ============ */
