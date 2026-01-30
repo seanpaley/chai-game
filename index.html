@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pooja's Chai Academy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/characters.css">
+</head>
+<body>
+
+  <!-- ==================== TITLE SCREEN ==================== -->
+  <div id="title-screen" class="screen active">
+    <div class="shared-result">
+      <div class="level-name"></div>
+      <div class="score-big"></div>
+      <p>Can you beat this score?</p>
+    </div>
+    <div class="title-logo">&#x2615;</div>
+    <div class="title-name">Pooja's Chai Academy</div>
+    <div class="title-sub">Learn to make authentic chai, one cup at a time</div>
+    <div class="menu-buttons">
+      <button class="btn btn-primary" id="btn-play">Play</button>
+      <button class="btn btn-secondary" id="btn-howto">How to Play</button>
+      <button class="btn btn-secondary" id="btn-recipes">Recipe Book</button>
+    </div>
+    <div class="settings-row">
+      <div class="toggle" id="tara-toggle"></div>
+      <span class="toggle-label">Tara Mode (No Hints)</span>
+    </div>
+  </div>
+
+  <!-- ==================== STORY INTRO ==================== -->
+  <div id="story-screen" class="screen">
+    <div class="title-logo">&#x2615;</div>
+    <div class="story-text">
+      <p><strong>Sean</strong> has always loved chai, but never learned to make it properly.</p>
+      <p>One day, his colleague <strong>Pooja</strong> overhears him microwaving a tea bag with milk.</p>
+      <p><em>"Beta... what are you doing?! That is NOT chai!"</em></p>
+      <p>And so begins <strong>Sean's</strong> journey through <strong>Pooja's Chai Academy</strong> &#8212;
+        5 levels of increasingly complex recipes, judged by the most demanding chai critic in the office.</p>
+      <p><strong>Tara</strong> will be there to ask the questions you're too afraid to ask.</p>
+    </div>
+    <button class="btn btn-primary" id="btn-story-continue">Let's Begin!</button>
+  </div>
+
+  <!-- ==================== LEVEL SELECT ==================== -->
+  <div id="level-screen" class="screen">
+    <div class="screen-title">Select a Recipe</div>
+    <div class="level-grid"></div>
+    <div class="back-row">
+      <button class="btn btn-ghost btn-small btn-back">Back to Menu</button>
+    </div>
+  </div>
+
+  <!-- ==================== HOW TO PLAY ==================== -->
+  <div id="howto-screen" class="screen">
+    <div class="screen-title">How to Play</div>
+    <div class="howto-section">
+      <h3>&#x1F9C2; 1. Select Ingredients</h3>
+      <p>Pick the right ingredients from the shelf. Watch out for traps &mdash; Pooja will NOT be happy if you add lemon to chai!</p>
+    </div>
+    <div class="howto-section">
+      <h3>&#x1F44A; 2. Prepare Spices</h3>
+      <p>Some ingredients need special preparation. Crush, slice, grate, or leave whole &mdash; the method matters!</p>
+    </div>
+    <div class="howto-section">
+      <h3>&#x1F525; 3. Cook</h3>
+      <p>Control the heat and add ingredients in the right order. Water before tea, tea before milk!</p>
+    </div>
+    <div class="howto-section">
+      <h3>&#x23F1; 4. Time It</h3>
+      <p>Pull the chai off the heat at the perfect moment. Too early = weak, too late = bitter.</p>
+    </div>
+    <div class="howto-section">
+      <h3>&#x2615; 5. Serve</h3>
+      <p>Choose the right vessel and don't forget to strain!</p>
+    </div>
+    <div class="howto-section">
+      <h3>&#x2B50; Scoring</h3>
+      <p>100 points total across 5 categories (20 each): Ingredients, Preparation, Order, Timing, and Presentation.</p>
+      <ul>
+        <li>0&#8211;49 = 0 stars</li>
+        <li>50&#8211;69 = 1 star</li>
+        <li>70&#8211;84 = 2 stars</li>
+        <li>85&#8211;100 = 3 stars</li>
+      </ul>
+    </div>
+    <div class="howto-section">
+      <h3>&#x1F47B; Tara Mode</h3>
+      <p>Toggle <strong>Tara Mode</strong> on the title screen for hard mode &mdash; no hints! Earn 3 stars in Tara Mode to unlock a special badge.</p>
+    </div>
+    <button class="btn btn-ghost btn-small btn-back">Back to Menu</button>
+  </div>
+
+  <!-- ==================== RECIPE BOOK ==================== -->
+  <div id="recipe-screen" class="screen">
+    <div class="screen-title">Recipe Book</div>
+    <div class="recipe-list"></div>
+    <button class="btn btn-ghost btn-small btn-back">Back to Menu</button>
+  </div>
+
+  <!-- ==================== GAMEPLAY ==================== -->
+  <div id="gameplay-screen" class="screen">
+    <div class="game-top-bar">
+      <span class="game-level-title">Level 1: Basic Chai</span>
+      <div class="phase-indicator">
+        <div class="phase-dot"></div>
+        <div class="phase-dot"></div>
+        <div class="phase-dot"></div>
+        <div class="phase-dot"></div>
+        <div class="phase-dot"></div>
+      </div>
+      <button class="btn btn-ghost btn-small btn-back-levels">Quit</button>
+    </div>
+
+    <div class="game-area">
+      <div class="pot-area">
+        <div class="pot-wrapper">
+          <div class="steam-container">
+            <div class="steam-line"></div>
+            <div class="steam-line"></div>
+            <div class="steam-line"></div>
+            <div class="steam-line"></div>
+          </div>
+          <div class="pot">
+            <div class="pot-handle-left"></div>
+            <div class="pot-handle-right"></div>
+            <div class="pot-liquid"></div>
+            <div class="pot-contents"></div>
+            <div class="bubble-container">
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+            </div>
+          </div>
+          <div class="flame-container heat-off">
+            <div class="flame flame-outer"><div class="flame-inner"></div></div>
+            <div class="flame flame-outer"><div class="flame-inner"></div></div>
+            <div class="flame flame-outer"><div class="flame-inner"></div></div>
+            <div class="flame flame-outer"><div class="flame-inner"></div></div>
+            <div class="flame flame-outer"><div class="flame-inner"></div></div>
+          </div>
+        </div>
+        <div class="heat-controls"></div>
+      </div>
+
+      <div class="interaction-panel">
+        <div class="phase-title">Select Ingredients</div>
+        <div class="phase-instruction">Click ingredients to add to your chai</div>
+      </div>
+    </div>
+
+    <div class="character-area"></div>
+  </div>
+
+  <!-- ==================== JUDGING ==================== -->
+  <div id="judging-screen" class="screen">
+    <div class="judge-section">
+      <div class="avatar avatar-large avatar-pooja">&#x1F469;&#x200D;&#x1F373;</div>
+      <div class="char-name char-name-pooja">Pooja</div>
+    </div>
+    <div class="judge-verdict" id="judge-verdict">"..."</div>
+    <div id="judge-level-name" style="color:#999;font-size:0.9rem;"></div>
+    <div class="score-display" id="score-value">0</div>
+    <div class="star-display" id="star-display"></div>
+    <div class="score-breakdown" id="score-breakdown"></div>
+    <div class="unlock-message" id="unlock-message"></div>
+
+    <div class="share-card" id="share-card">
+      <h2>&#x2615; Pooja's Chai Academy</h2>
+      <div class="share-level"></div>
+      <div class="share-score" style="font-size:2rem;font-weight:800;color:#D4763C;"></div>
+      <div class="share-stars" style="font-size:1.5rem;"></div>
+    </div>
+
+    <div class="share-buttons">
+      <button class="btn btn-primary" id="btn-retry">Try Again</button>
+      <button class="btn btn-secondary" id="btn-next-level">Level Select</button>
+      <button class="btn btn-ghost" id="btn-share">Challenge a Coworker</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/recipes.js"></script>
+  <script src="js/dialogue.js"></script>
+  <script src="js/scoring.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
