@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chaidle - Daily Chai Puzzle</title>
+  <link rel="stylesheet" href="chaidle.css">
+  <link rel="stylesheet" href="../shared/css/animations.css">
+  <link rel="stylesheet" href="../shared/css/characters.css">
+</head>
+<body>
+  <div class="chaidle-container">
+    <!-- Header -->
+    <header class="chaidle-header">
+      <a href="../" class="header-back" title="Back to menu">&#x2B05;&#xFE0F;</a>
+      <div class="header-title">
+        <span class="header-chai">&#x2615;</span>
+        <span>Chaidle</span>
+        <span class="header-number" id="puzzle-number">#0</span>
+      </div>
+      <div class="header-actions">
+        <button class="header-btn" id="btn-help" title="How to play">?</button>
+        <button class="header-btn" id="btn-stats" title="Statistics">&#x1F4CA;</button>
+      </div>
+    </header>
+
+    <!-- Guess Grid -->
+    <div class="grid-section">
+      <div class="guess-grid" id="guess-grid"></div>
+    </div>
+
+    <!-- Pot + Pooja -->
+    <div class="pot-section">
+      <div class="mini-pot" id="mini-pot" onclick="Chaidle.handlePotClick()">
+        <div class="mini-pot-body">
+          <div class="mini-steam">
+            <div class="steam-line"></div>
+            <div class="steam-line"></div>
+            <div class="steam-line"></div>
+          </div>
+          &#x2615;
+        </div>
+      </div>
+      <div class="pooja-area">
+        <div class="pooja-mini-avatar">&#x1F469;&#x200D;&#x1F373;</div>
+        <div class="pooja-reaction" id="pooja-reaction">"Guess my recipe, beta!"</div>
+      </div>
+    </div>
+
+    <!-- Ingredient Keyboard -->
+    <div class="keyboard-section">
+      <div class="ingredient-keyboard" id="ingredient-keyboard"></div>
+    </div>
+
+    <!-- End State (hidden until game over) -->
+    <div class="end-state" id="end-state"></div>
+  </div>
+
+  <!-- Bollywood Easter Egg -->
+  <div id="bollywood-overlay" class="bollywood-overlay">
+    <div class="bollywood-emojis"></div>
+    <div class="bollywood-content">
+      <div class="bollywood-title">&#x1F3AC; BOLLYWOOD MOMENT &#x1F3AC;</div>
+      <div class="bollywood-avatar">&#x1F469;&#x200D;&#x1F373;</div>
+      <div class="bollywood-quote"></div>
+      <div class="bollywood-subtitle">~ tap anywhere to dismiss ~</div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../shared/js/recipes.js"></script>
+  <script src="../shared/js/dialogue.js"></script>
+  <script src="js/daily.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/share.js"></script>
+  <script src="js/chaidle.js"></script>
+</body>
+</html>

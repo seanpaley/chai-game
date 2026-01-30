@@ -1,0 +1,787 @@
+/* style.css - Layout, colors, responsive grid */
+
+:root {
+  --cream: #FFF8F0;
+  --chai-brown: #D4763C;
+  --dark-brown: #8B4513;
+  --deep-brown: #5C2E00;
+  --milk-white: #FFFEF0;
+  --gold: #DAA520;
+  --green: #4CAF50;
+  --red: #E74C3C;
+  --light-brown: #F5DEB3;
+  --pot-dark: #444;
+  --pot-light: #666;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--cream);
+  color: var(--dark-brown);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Screen management */
+.screen {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+}
+.screen.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ============ TITLE SCREEN ============ */
+#title-screen {
+  justify-content: center;
+  text-align: center;
+  gap: 30px;
+}
+
+.title-logo {
+  font-size: 3rem;
+  margin-bottom: 0;
+}
+
+.title-name {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--deep-brown);
+  margin-bottom: 4px;
+}
+
+.title-sub {
+  font-size: 1.1rem;
+  color: var(--chai-brown);
+  font-style: italic;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 280px;
+}
+
+/* Shared URL result display */
+.shared-result {
+  background: var(--light-brown);
+  border: 2px solid var(--chai-brown);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 10px;
+  text-align: center;
+  display: none;
+}
+.shared-result.visible { display: block; }
+.shared-result .score-big { font-size: 2rem; font-weight: 800; color: var(--deep-brown); }
+.shared-result .level-name { color: var(--chai-brown); font-weight: 600; }
+
+/* ============ BUTTONS ============ */
+.btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+  background: var(--chai-brown);
+  color: white;
+}
+.btn-primary:hover { background: #c06830; }
+
+.btn-secondary {
+  background: var(--light-brown);
+  color: var(--dark-brown);
+  border: 2px solid var(--chai-brown);
+}
+
+.btn-small {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--chai-brown);
+  border: 2px dashed var(--chai-brown);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ============ STORY INTRO ============ */
+#story-screen {
+  justify-content: center;
+  text-align: center;
+  gap: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.story-text {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--dark-brown);
+}
+
+.story-text strong { color: var(--deep-brown); }
+
+/* ============ LEVEL SELECT ============ */
+#level-screen { gap: 20px; max-width: 700px; margin: 0 auto; }
+
+.screen-title {
+  font-size: 1.8rem;
+  color: var(--deep-brown);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: 100%;
+}
+
+.level-card {
+  background: white;
+  border: 2px solid var(--light-brown);
+  border-radius: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+.level-card:hover:not(.locked) {
+  border-color: var(--chai-brown);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.level-card.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.level-card.locked:hover { transform: none; }
+
+.level-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--chai-brown);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+.level-card.locked .level-num { background: #999; }
+
+.level-info h3 { font-size: 1.1rem; color: var(--deep-brown); margin-bottom: 2px; }
+.level-info p { font-size: 0.85rem; color: #888; }
+
+.level-stars {
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+}
+
+.back-row {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ============ HOW TO PLAY ============ */
+#howto-screen {
+  max-width: 600px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.howto-section {
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid var(--light-brown);
+}
+.howto-section h3 { color: var(--chai-brown); margin-bottom: 8px; }
+.howto-section p, .howto-section li {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--dark-brown);
+}
+.howto-section ul { padding-left: 20px; }
+
+/* ============ RECIPE BOOK ============ */
+#recipe-screen { max-width: 600px; margin: 0 auto; gap: 16px; }
+
+.recipe-card {
+  background: white;
+  border: 2px solid var(--light-brown);
+  border-radius: 12px;
+  padding: 18px;
+  width: 100%;
+}
+.recipe-card.recipe-locked { opacity: 0.5; }
+.recipe-card h3 { color: var(--deep-brown); margin-bottom: 6px; }
+.recipe-card p { font-size: 0.9rem; color: #777; margin-bottom: 8px; }
+.recipe-card .recipe-ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.recipe-card .recipe-ingredients span {
+  background: var(--cream);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+/* ============ GAMEPLAY SCREEN ============ */
+#gameplay-screen {
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 0;
+  padding-top: 10px;
+}
+
+/* Top bar */
+.game-top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.game-level-title { font-weight: 700; color: var(--deep-brown); font-size: 1.1rem; }
+.phase-indicator {
+  display: flex;
+  gap: 6px;
+}
+.phase-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--light-brown);
+  transition: background 0.3s;
+}
+.phase-dot.active { background: var(--chai-brown); }
+.phase-dot.done { background: var(--green); }
+
+/* Main gameplay area */
+.game-area {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  min-height: 400px;
+}
+
+/* Left: pot + cooking area */
+.pot-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pot-wrapper {
+  position: relative;
+  width: 200px;
+  height: 180px;
+}
+
+.pot {
+  width: 180px;
+  height: 120px;
+  background: linear-gradient(180deg, var(--pot-light), var(--pot-dark));
+  border-radius: 0 0 50% 50%;
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  border: 3px solid #333;
+  overflow: hidden;
+}
+
+.pot-handle-left, .pot-handle-right {
+  position: absolute;
+  width: 24px;
+  height: 14px;
+  background: #555;
+  border-radius: 4px;
+  top: 60px;
+}
+.pot-handle-left { left: -14px; }
+.pot-handle-right { right: -14px; }
+
+.pot-liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  background: #ADD8E6;
+  transition: height 0.5s ease, background-color 0.8s ease;
+  border-radius: 0 0 50% 50%;
+}
+
+.pot-contents {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2px;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 150px;
+  z-index: 2;
+}
+
+/* Flame under pot */
+.flame-container {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  height: 30px;
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Heat controls */
+.heat-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 36px;
+}
+.heat-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 2px solid var(--chai-brown);
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.heat-btn.active {
+  background: var(--chai-brown);
+  color: white;
+}
+.heat-btn:hover:not(.active) { background: var(--light-brown); }
+
+/* Right: interaction panel */
+.interaction-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.phase-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--deep-brown);
+}
+
+.phase-instruction {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+/* Ingredient shelf */
+.ingredient-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ingredient-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 8px;
+  border: 2px solid var(--light-brown);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 72px;
+  background: white;
+}
+.ingredient-tile:hover {
+  border-color: var(--chai-brown);
+  transform: scale(1.05);
+}
+.ingredient-tile.selected {
+  border-color: var(--green);
+  background: #E8F5E9;
+}
+.ingredient-tile.trap-selected {
+  border-color: var(--red);
+  background: #FFEBEE;
+}
+.ingredient-tile .ing-emoji { font-size: 1.6rem; }
+.ingredient-tile .ing-label {
+  font-size: 0.65rem;
+  text-align: center;
+  margin-top: 4px;
+  color: var(--dark-brown);
+  line-height: 1.2;
+}
+
+/* Prep method buttons */
+.prep-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.prep-btn {
+  padding: 10px 16px;
+  border: 2px solid var(--light-brown);
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  font-size: 0.9rem;
+}
+.prep-btn:hover { border-color: var(--chai-brown); }
+.prep-btn.selected {
+  border-color: var(--green);
+  background: #E8F5E9;
+}
+
+/* Cooking step counter */
+.cooking-step {
+  background: var(--light-brown);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--deep-brown);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+/* Cooking timeline */
+.cooking-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-ingredient {
+  padding: 8px 14px;
+  border: 2px solid var(--light-brown);
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.timeline-ingredient:hover { border-color: var(--chai-brown); }
+.timeline-ingredient.added {
+  border-color: var(--green);
+  background: #E8F5E9;
+  cursor: default;
+}
+
+/* Timing meter */
+.timing-meter-container {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.timing-meter {
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(to right, #E8F5E9 0%, #4CAF50 35%, #FFD700 50%, #FF9800 70%, #E74C3C 100%);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--dark-brown);
+}
+
+.timing-marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--deep-brown);
+  transition: left 0.1s linear;
+}
+
+.timing-sweet-spot {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  background: rgba(76, 175, 80, 0.3);
+  border: 2px dashed var(--green);
+  border-radius: 8px;
+}
+
+.timing-label {
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 6px;
+  color: #888;
+}
+
+/* Vessel selection */
+.vessel-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.vessel-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px;
+  border: 2px solid var(--light-brown);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100px;
+  background: white;
+}
+.vessel-tile:hover { border-color: var(--chai-brown); }
+.vessel-tile.selected { border-color: var(--green); background: #E8F5E9; }
+.vessel-tile .vessel-emoji { font-size: 2rem; }
+.vessel-tile .vessel-label { font-size: 0.75rem; margin-top: 6px; text-align: center; }
+
+.strain-toggle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.strain-btn {
+  padding: 10px 20px;
+  border: 2px solid var(--light-brown);
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.strain-btn:hover { border-color: var(--chai-brown); }
+.strain-btn.selected { border-color: var(--green); background: #E8F5E9; }
+
+/* Phase action button */
+.phase-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+/* ============ CHARACTER AREA ============ */
+.character-area {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  min-height: 80px;
+}
+
+/* ============ JUDGING SCREEN ============ */
+#judging-screen {
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.judge-avatar-large {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin: 0 auto;
+}
+
+.judge-verdict {
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--deep-brown);
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.score-display {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--chai-brown);
+}
+
+.star-display {
+  font-size: 2.5rem;
+  letter-spacing: 6px;
+}
+
+.score-breakdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+  max-width: 360px;
+  text-align: left;
+}
+
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border: 1px solid var(--light-brown);
+}
+.breakdown-item .cat-name { color: #888; }
+.breakdown-item .cat-score { font-weight: 700; color: var(--deep-brown); }
+
+.unlock-message {
+  background: #E8F5E9;
+  border: 2px solid var(--green);
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-weight: 600;
+  color: var(--green);
+  display: none;
+}
+.unlock-message.visible { display: block; }
+
+/* ============ RESULTS / SHARE ============ */
+.share-card {
+  background: white;
+  border: 3px solid var(--chai-brown);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+.share-card h2 { color: var(--deep-brown); margin-bottom: 4px; }
+
+.share-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* ============ SETTINGS ROW ============ */
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.toggle {
+  width: 48px;
+  height: 26px;
+  background: #ccc;
+  border-radius: 13px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.toggle.on { background: var(--chai-brown); }
+.toggle::after {
+  content: '';
+  width: 22px;
+  height: 22px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left 0.3s;
+}
+.toggle.on::after { left: 24px; }
+
+.toggle-label { font-size: 0.9rem; font-weight: 600; color: var(--dark-brown); }
+
+/* ============ TARA MODE BADGE ============ */
+.tara-badge {
+  background: linear-gradient(135deg, var(--gold), #FFA500);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: none;
+}
+.tara-badge.earned { display: inline-block; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 700px) {
+  .game-area {
+    grid-template-columns: 1fr;
+  }
+
+  .pot-area {
+    order: -1;
+  }
+
+  .title-logo { font-size: 2.2rem; }
+  .title-name { font-size: 1.6rem; }
+
+  .level-card {
+    grid-template-columns: auto 1fr;
+  }
+  .level-stars {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .score-breakdown {
+    grid-template-columns: 1fr;
+  }
+
+  .character-area {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
